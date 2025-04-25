@@ -27,7 +27,7 @@ export class GitHubClient {
     this.axios = axios.create({
       headers: {
         Accept: "application/vnd.github.v3+json",
-        Authorization: `Bearer ${token}`,
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
     });
   }
@@ -42,7 +42,8 @@ export class GitHubClient {
 export async function fetchFolderContents(
   client: GitHubClient,
   repoUrl: string,
-  branch: string
+  branch: string,
+  wasTokenProvided: boolean
 ) {
   const apiUrl = buildApiUrl(repoUrl, branch);
   console.log(chalk.gray(`🚀  GET ${apiUrl}`));
@@ -51,8 +52,20 @@ export async function fetchFolderContents(
     const res = await client.get<Array<GitHubFile>>(apiUrl);
     return res.data;
   } catch (err: any) {
-    if (err.response?.status === 404) return null; // 폴더 없음
-    throw err; // 그 외 오류 전파
+    if (err.response?.status === 403 || err.response?.status === 404) {
+      console.error(
+        chalk.red(`❌ Failed to access .cursor/rules on branch '${branch}'.`)
+      );
+      if (!wasTokenProvided) {
+        console.log(
+          chalk.yellow(
+            `💡 This may be a private repository. Try providing a GitHub token using --token or GITHUB_TOKEN env.`
+          )
+        );
+      }
+      return null;
+    }
+    throw err;
   }
 }
 

@@ -9,6 +9,7 @@ const options = parseCliArgs(process.argv, process.env);
 validateParsedOptions(options);
 
 (async () => {
+  const wasTokenProvided = !!options.token;
   const client = new GitHubClient(options.token);
   const branches = options.branch ? [options.branch] : ["main", "master"];
   const localDir = path.resolve(
@@ -18,7 +19,12 @@ validateParsedOptions(options);
 
   for (const branch of branches) {
     try {
-      const files = await fetchFolderContents(client, options.repoUrl, branch);
+      const files = await fetchFolderContents(
+        client,
+        options.repoUrl,
+        branch,
+        wasTokenProvided
+      );
       if (!files) {
         console.log(
           chalk.yellow(`⚠️  .cursor/rules not found in branch '${branch}'.`)
