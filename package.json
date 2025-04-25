@@ -1,0 +1,41 @@
+{
+  "name": "rules-hub-cli",
+  "version": "1.0.0",
+  "description": "CLI to copy .cursor/rules folder from a GitHub repository to your local project",
+  "main": "dist/index.js",
+  "bin": {
+    "rules-hub": "dist/index.js"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "cli",
+    "github",
+    "config",
+    "cursor",
+    "rules"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest run",
+    "build": "tsc",
+    "prepublishOnly": "pnpm run build"
+  },
+  "packageManager": "pnpm@10.0.0",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  }
+}
