@@ -1,6 +1,6 @@
 {
   "name": "rules-hub-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI to copy .cursor/rules folder from a GitHub repository to your local project",
   "main": "dist/index.js",
   "bin": {
