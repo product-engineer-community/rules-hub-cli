@@ -14,15 +14,10 @@ You can run the CLI directly with `npx`:
 npx rules-hub <repo-url> --token <your_token>
 ```
 
-Or install globally:
+Or install globally, then use it anywhere:
 
 ```bash
 npm install -g rules-hub-cli
-```
-
-Then use it anywhere:
-
-```bash
 rules-hub <repo-url> --token <your_token>
 ```
 
